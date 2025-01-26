@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: GPL-3.0-only
+---
+# defaults file for ansible-royco-ssh-hardening
+ansible_royco_ssh_hardening_extras: true
+ansible_royco_ssh_hardening_authmethods: "publickey"

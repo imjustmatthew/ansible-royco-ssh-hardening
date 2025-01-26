@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: GPL-3.0-only
+---
+# handlers file for ansible-royco-ssh-hardening
+- name: Restart ssh
+  become: true
+  ansible.builtin.service:
+    name: ssh
+    state: restarted

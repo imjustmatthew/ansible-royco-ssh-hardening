@@ -1,0 +1,20 @@
+#SPDX-License-Identifier: GPL-3.0-only
+---
+argument_specs:
+  # role main.yml entry point
+  main:
+    short_description: Main entry point for the role
+    description:
+      - This is the main entrypoint for the role
+    author:
+      - Matthew Roy
+    options:
+      ansible_royco_ssh_hardening_authmethods:
+        required: false
+        description: "The parameter for AuthenticationMethods"
+        default: "publickey"
+      ansible_royco_ssh_hardening_extras:
+        type: "bool"
+        required: false
+        description: "Defines whether to apply extra hardening steps, mostly to protect users from themselves"
+        default: true

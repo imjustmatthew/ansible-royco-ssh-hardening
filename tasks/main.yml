@@ -1,0 +1,34 @@
+#SPDX-License-Identifier: GPL-0
+---
+# tasks file for ansible-royco-ssh-hardening
+- name: Copy a new "00royco-ssh-hardening.conf" file into place, backing up the original if it differs from the copied version
+  become: true
+  ansible.builtin.template:
+    src: 00-ssh-hardening.conf.j2
+    dest: /etc/ssh/sshd_config.d/00-ssh-hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  notify:
+    - Restart ssh
+
+- name: Remove ssh moduli less than 1000-bit
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/moduli
+    state: absent
+    regexp: '^[0-9]{14} [0-9] [0-9]+ [0-9]+ [0-9]{0,3} [0-9]+' #[0-9]{0,3} is what captures the bit-length
+    # format is documented in https://manpages.ubuntu.com/manpages/noble/en/man5/moduli.5.html
+  notify:
+    - Restart ssh
+
+- name: Remove ssh moduli less than 3000-bit
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/moduli
+    state: absent
+    regexp: '^[0-9]{14} [0-9] [0-9]+ [0-9]+ [12][0-9]{3} [0-9]+' #[12][0-9]{3} is what captures the bit-length
+    # format is documented in https://manpages.ubuntu.com/manpages/noble/en/man5/moduli.5.html
+  notify:
+    - Restart ssh
