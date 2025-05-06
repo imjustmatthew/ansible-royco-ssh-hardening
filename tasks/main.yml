@@ -2,12 +2,13 @@
 ---
 # tasks file for ansible-royco-ssh-hardening
 
-- name: Comment out Subsystem sftp in sshd_config
+- name: Remove Subsystem sftp in sshd_config
   become: true
-  ansible.builtin.replace:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^(Subsystem       sftp    [.]+)$'
-    replace: '# \1'
+    search_string: '/usr/lib/openssh/sftp-server'
+    state: absent
+    backup: true
     validate: 'sshd -t -f %s'
   notify:
     - Restart ssh
