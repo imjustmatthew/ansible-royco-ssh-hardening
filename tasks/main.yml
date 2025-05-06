@@ -7,7 +7,7 @@
   ansible.builtin.replace:
     path: /etc/ssh/sshd_config
     regexp: '^Subsystem       sftp    [.]+$'
-    line: '# \1'
+    replace: '# \1'
     validate: 'sshd -t -f %s'
   notify:
     - Restart ssh
