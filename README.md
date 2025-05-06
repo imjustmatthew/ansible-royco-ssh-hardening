@@ -14,7 +14,7 @@ Implementation notes:
 Requirements
 ------------
 
-Tested only on Ubuntu 24.04, though it probably works with all modern Ubuntu.
+Tested primarily on Ubuntu 24.04 server, though it probably works with all modern Ubuntu. Ubuntu 22.04 server also works, but is not frequently tested/
 
 Role Variables
 --------------
