@@ -1,6 +1,17 @@
 #SPDX-License-Identifier: GPL-0
 ---
 # tasks file for ansible-royco-ssh-hardening
+
+- name: Comment out Subsystem sftp in sshd_config
+  become: true
+  ansible.builtin.replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^Subsystem       sftp    [.]+$'
+    line: '# \1'
+    validate: 'sshd -t -f %s'
+  notify:
+    - Restart ssh
+
 - name: Copy a new "00royco-ssh-hardening.conf" file into place, backing up the original if it differs from the copied version
   become: true
   ansible.builtin.template:
@@ -10,6 +21,7 @@
     group: root
     mode: '0644'
     backup: yes
+    validate: 'sshd -t -f %s'
   notify:
     - Restart ssh
 
