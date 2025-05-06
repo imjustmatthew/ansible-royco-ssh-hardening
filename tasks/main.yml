@@ -6,7 +6,7 @@
   become: true
   ansible.builtin.replace:
     path: /etc/ssh/sshd_config
-    regexp: '^Subsystem       sftp    [.]+$'
+    regexp: '^(Subsystem       sftp    [.]+)$'
     replace: '# \1'
     validate: 'sshd -t -f %s'
   notify:
